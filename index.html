@@ -8,8 +8,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="RPM Meter">
 <meta name="theme-color" content="#0f0f0f">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f0f0f'/%3E%3Cpath d='M50 75 A30 30 0 1 1 50 15 A30 30 0 1 1 50 75' fill='none' stroke='%23facc15' stroke-width='8' stroke-dasharray='75 25' stroke-dashoffset='12'/%3E%3Cline x1='50' y1='72' x2='68' y2='38' stroke='%23facc15' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='72' r='5' fill='%23facc15'/%3E%3C/svg%3E">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -19,16 +17,11 @@ body {
   padding: 16px; user-select: none;
 }
 h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; color: #666; text-transform: uppercase; margin-bottom: 12px; }
-
-/* TABS */
 .tabs { display: flex; gap: 4px; width: 100%; max-width: 360px; margin-bottom: 16px; background: #1a1a1a; border-radius: 10px; padding: 4px; }
 .tab { flex: 1; padding: 8px 4px; border: none; background: none; color: #555; font-size: 12px; cursor: pointer; border-radius: 7px; transition: all 0.2s; }
 .tab.active { background: #2a2a2a; color: #facc15; font-weight: 600; }
-
 .page { display: none; width: 100%; max-width: 360px; flex-direction: column; align-items: center; }
 .page.active { display: flex; }
-
-/* GAUGE */
 .gauge-wrap { width: 280px; height: 168px; margin-bottom: 8px; }
 canvas#gauge { display: block; }
 .rpm-display { text-align: center; margin-bottom: 6px; }
@@ -50,16 +43,11 @@ canvas#gauge { display: block; }
 .sensitivity-row label { font-size: 11px; color: #555; white-space: nowrap; }
 .sensitivity-row input[type=range] { flex: 1; accent-color: #facc15; }
 .sensitivity-row span { font-size: 11px; color: #444; min-width: 20px; text-align: right; }
-
-/* LIVE GRAPH */
 .live-graph-wrap { width: 100%; margin-top: 12px; background: #1a1a1a; border-radius: 10px; padding: 10px; }
 .live-graph-label { font-size: 10px; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
 canvas#liveGraph { width: 100%; height: 80px; display: block; }
-
-/* HISTORY */
 .history-empty { color: #444; font-size: 13px; text-align: center; margin-top: 40px; }
-.session-card { background: #1a1a1a; border-radius: 12px; padding: 12px; margin-bottom: 10px; width: 100%; cursor: pointer; border: 1px solid #222; transition: border-color 0.2s; }
-.session-card:hover { border-color: #facc15; }
+.session-card { background: #1a1a1a; border-radius: 12px; padding: 12px; margin-bottom: 10px; width: 100%; border: 1px solid #222; }
 .session-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
 .session-date { font-size: 11px; color: #555; }
 .session-note { font-size: 12px; color: #facc15; font-style: italic; margin-bottom: 6px; }
@@ -71,24 +59,16 @@ canvas#liveGraph { width: 100%; height: 80px; display: block; }
 .btn-export { background: #1e3a2a; color: #22c55e; }
 .btn-delete { background: #2a1a1a; color: #ef4444; }
 canvas.session-graph { width: 100%; height: 60px; display: block; margin-top: 8px; border-radius: 6px; background: #111; }
-
-/* NOTES PAGE */
 .note-form { width: 100%; }
-.note-form textarea {
-  width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px;
-  color: #fff; font-size: 14px; padding: 12px; resize: none; height: 120px;
-  font-family: inherit; margin-bottom: 8px;
-}
+.note-form textarea { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 14px; padding: 12px; resize: none; height: 120px; font-family: inherit; margin-bottom: 8px; }
 .note-form textarea:focus { outline: none; border-color: #facc15; }
 .note-form textarea::placeholder { color: #444; }
 .btn-save-note { background: #facc15; color: #000; }
 .notes-list { width: 100%; margin-top: 16px; }
 .note-card { background: #1a1a1a; border-radius: 10px; padding: 12px; margin-bottom: 8px; position: relative; }
-.note-card p { font-size: 13px; color: #ccc; line-height: 1.5; }
+.note-card p { font-size: 13px; color: #ccc; line-height: 1.5; padding-right: 20px; }
 .note-card .note-ts { font-size: 10px; color: #444; margin-top: 6px; }
 .note-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #444; font-size: 16px; cursor: pointer; }
-
-/* MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: #000a; z-index: 99; justify-content: center; align-items: center; }
 .modal-overlay.open { display: flex; }
 .modal { background: #1a1a1a; border-radius: 14px; padding: 20px; width: 90%; max-width: 320px; }
@@ -99,18 +79,19 @@ canvas.session-graph { width: 100%; height: 60px; display: block; margin-top: 8p
 .modal-btns button { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 13px; cursor: pointer; }
 .btn-confirm { background: #facc15; color: #000; font-weight: 600; }
 .btn-skip { background: #2a2a2a; color: #888; }
+.offline-badge { font-size: 10px; color: #22c55e; background: #1e3a2a; padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; }
 </style>
 </head>
 <body>
 <h1>RPM Meter</h1>
+<div class="offline-badge" id="offlineBadge">● Online</div>
 
 <div class="tabs">
-  <button class="tab active" onclick="showPage('meter')">⚡ Meter</button>
-  <button class="tab" onclick="showPage('history')">📊 History</button>
-  <button class="tab" onclick="showPage('notes')">📝 Notes</button>
+  <button class="tab active" onclick="showPage('meter',this)">⚡ Meter</button>
+  <button class="tab" onclick="showPage('history',this)">📊 History</button>
+  <button class="tab" onclick="showPage('notes',this)">📝 Notes</button>
 </div>
 
-<!-- METER PAGE -->
 <div class="page active" id="page-meter">
   <div class="gauge-wrap"><canvas id="gauge" width="280" height="168"></canvas></div>
   <div class="rpm-display">
@@ -139,12 +120,10 @@ canvas.session-graph { width: 100%; height: 60px; display: block; margin-top: 8p
   </div>
 </div>
 
-<!-- HISTORY PAGE -->
 <div class="page" id="page-history">
   <div id="historyList" style="width:100%;"></div>
 </div>
 
-<!-- NOTES PAGE -->
 <div class="page" id="page-notes">
   <div class="note-form">
     <textarea id="noteInput" placeholder="Write a note about your measurement..."></textarea>
@@ -153,7 +132,6 @@ canvas.session-graph { width: 100%; height: 60px; display: block; margin-top: 8p
   <div class="notes-list" id="notesList"></div>
 </div>
 
-<!-- SAVE SESSION MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h3>Session Complete</h3>
@@ -166,30 +144,32 @@ canvas.session-graph { width: 100%; height: 60px; display: block; margin-top: 8p
 </div>
 
 <script>
-// ---- STATE ----
 const MAX_RPM = 120000;
-let running = false, audioCtx, analyser, src, stream;
-let rpm = 0, minRPM = Infinity, maxRPM = 0, sumRPM = 0, sampleCount = 0;
-let lastPeak = 0, peakTimes = [], rafId;
-let sensitivity = 5;
-let sessionLog = [], sessionStart = null;
-let pendingSession = null;
+let running=false, audioCtx, analyser, src, stream;
+let rpm=0, minRPM=Infinity, maxRPM=0, sumRPM=0, sampleCount=0;
+let lastPeak=0, peakTimes=[], rafId;
+let sensitivity=5, sessionLog=[], sessionStart=null, pendingSession=null;
 
-// Storage helpers
-const load = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } };
-const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+// Storage
+const load = k => { try { return JSON.parse(localStorage.getItem(k))||[]; } catch { return []; } };
+const store = (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); } catch(e) { console.warn('Storage full',e); } };
 let sessions = load('rpm_sessions');
 let notes = load('rpm_notes');
 
-// ---- GAUGE ----
-const gc = document.getElementById('gauge'), gx = gc.getContext('2d');
+// Online/offline badge
+window.addEventListener('online', () => { document.getElementById('offlineBadge').textContent='● Online'; document.getElementById('offlineBadge').style.color='#22c55e'; });
+window.addEventListener('offline', () => { document.getElementById('offlineBadge').textContent='● Offline'; document.getElementById('offlineBadge').style.color='#facc15'; });
+if(!navigator.onLine) { document.getElementById('offlineBadge').textContent='● Offline'; document.getElementById('offlineBadge').style.color='#facc15'; }
+
+// Gauge
+const gc=document.getElementById('gauge'), gx=gc.getContext('2d');
 function drawGauge(val) {
   const W=280,H=168,cx=W/2,cy=H-20,r=120;
   gx.clearRect(0,0,W,H);
-  const grad = gx.createLinearGradient(cx-r,cy,cx+r,cy);
+  const grad=gx.createLinearGradient(cx-r,cy,cx+r,cy);
   grad.addColorStop(0,'#22c55e'); grad.addColorStop(0.5,'#eab308'); grad.addColorStop(1,'#ef4444');
   gx.beginPath(); gx.arc(cx,cy,r-8,Math.PI,0); gx.strokeStyle='#1e1e1e'; gx.lineWidth=16; gx.stroke();
-  const frac = Math.min(val/MAX_RPM,1), ang = Math.PI+frac*Math.PI;
+  const frac=Math.min(val/MAX_RPM,1), ang=Math.PI+frac*Math.PI;
   gx.beginPath(); gx.arc(cx,cy,r-8,Math.PI,ang); gx.strokeStyle=grad; gx.lineWidth=16; gx.lineCap='round'; gx.stroke();
   for(let i=0;i<=12;i++){
     const a=Math.PI+(i/12)*Math.PI;
@@ -204,62 +184,47 @@ function drawGauge(val) {
 }
 drawGauge(0);
 
-// ---- LIVE GRAPH ----
-const lgc = document.getElementById('liveGraph'), lgx = lgc.getContext('2d');
-const GRAPH_MAX = 120;
+// Live graph
+const lgc=document.getElementById('liveGraph'), lgx=lgc.getContext('2d');
 function drawLiveGraph() {
-  const W=lgc.offsetWidth*window.devicePixelRatio||340, H=80;
+  const W=lgc.parentElement.offsetWidth-20||320, H=80;
   lgc.width=W; lgc.height=H;
   lgx.clearRect(0,0,W,H);
-  if(sessionLog.length < 2) return;
-  const pts = sessionLog.slice(-GRAPH_MAX);
-  const maxV = Math.max(...pts.map(p=>p.rpm), 1);
+  const pts=sessionLog.slice(-120);
+  if(pts.length<2) return;
+  const maxV=Math.max(...pts.map(p=>p.rpm),1);
   lgx.beginPath();
-  pts.forEach((p,i)=>{
-    const x=(i/(pts.length-1))*W, y=H-(p.rpm/maxV)*(H-8)-4;
-    i===0?lgx.moveTo(x,y):lgx.lineTo(x,y);
-  });
+  pts.forEach((p,i)=>{ const x=(i/(pts.length-1))*W, y=H-(p.rpm/maxV)*(H-8)-4; i===0?lgx.moveTo(x,y):lgx.lineTo(x,y); });
   lgx.strokeStyle='#facc15'; lgx.lineWidth=2; lgx.lineJoin='round'; lgx.stroke();
-  // Fill
-  lgx.lineTo(W,H); lgx.lineTo(0,H); lgx.closePath();
-  lgx.fillStyle='rgba(250,204,21,0.08)'; lgx.fill();
+  lgx.lineTo(W,H); lgx.lineTo(0,H); lgx.closePath(); lgx.fillStyle='rgba(250,204,21,0.08)'; lgx.fill();
 }
 
-// ---- SESSION GRAPH ----
 function drawSessionGraph(canvas, log) {
-  const W=canvas.offsetWidth||300, H=60;
-  canvas.width=W; canvas.height=H;
-  const ctx=canvas.getContext('2d');
-  ctx.clearRect(0,0,W,H);
   if(!log||log.length<2) return;
-  const maxV=Math.max(...log.map(p=>p.rpm),1);
+  const W=canvas.parentElement.offsetWidth-24||300, H=60;
+  canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d'), maxV=Math.max(...log.map(p=>p.rpm),1);
+  ctx.clearRect(0,0,W,H);
   ctx.beginPath();
-  log.forEach((p,i)=>{
-    const x=(i/(log.length-1))*W, y=H-(p.rpm/maxV)*(H-6)-3;
-    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  });
+  log.forEach((p,i)=>{ const x=(i/(log.length-1))*W, y=H-(p.rpm/maxV)*(H-6)-3; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
   ctx.strokeStyle='#facc15'; ctx.lineWidth=1.5; ctx.lineJoin='round'; ctx.stroke();
-  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
-  ctx.fillStyle='rgba(250,204,21,0.08)'; ctx.fill();
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle='rgba(250,204,21,0.08)'; ctx.fill();
 }
 
-// ---- DETECTION ----
+// Detection
 function detectRPM() {
   if(!analyser) return;
-  const buf = new Float32Array(analyser.fftSize);
+  const buf=new Float32Array(analyser.fftSize);
   analyser.getFloatTimeDomainData(buf);
-  const thresh = 0.05+(10-sensitivity)*0.02, now=performance.now();
+  const thresh=0.05+(10-sensitivity)*0.02, now=performance.now();
   let peak=false;
-  for(let i=1;i<buf.length-1;i++){
-    if(buf[i]>thresh&&buf[i]>buf[i-1]&&buf[i]>buf[i+1]){peak=true;break;}
-  }
+  for(let i=1;i<buf.length-1;i++){ if(buf[i]>thresh&&buf[i]>buf[i-1]&&buf[i]>buf[i+1]){peak=true;break;} }
   if(peak&&now-lastPeak>50){
     peakTimes.push(now); lastPeak=now;
     peakTimes=peakTimes.filter(t=>now-t<2000);
     if(peakTimes.length>=2){
       const ivs=[]; for(let i=1;i<peakTimes.length;i++) ivs.push(peakTimes[i]-peakTimes[i-1]);
-      const avg=ivs.reduce((a,b)=>a+b,0)/ivs.length;
-      rpm=Math.min(Math.round(60000/avg),MAX_RPM);
+      rpm=Math.min(Math.round(60000/(ivs.reduce((a,b)=>a+b,0)/ivs.length)),MAX_RPM);
     }
   }
   if(now-lastPeak>2000) rpm=Math.max(0,rpm-30);
@@ -285,17 +250,15 @@ async function startMeasuring() {
     audioCtx=new(window.AudioContext||window.webkitAudioContext)();
     analyser=audioCtx.createAnalyser(); analyser.fftSize=2048;
     src=audioCtx.createMediaStreamSource(stream); src.connect(analyser);
-    running=true; sessionStart=new Date();
-    sessionLog=[]; minRPM=Infinity; maxRPM=0; sumRPM=0; sampleCount=0; peakTimes=[]; lastPeak=0; rpm=0;
+    running=true; sessionStart=new Date(); sessionLog=[];
+    minRPM=Infinity; maxRPM=0; sumRPM=0; sampleCount=0; peakTimes=[]; lastPeak=0; rpm=0;
     document.getElementById('dot').classList.add('active');
     document.getElementById('statusTxt').textContent='Listening…';
     document.getElementById('mainBtn').textContent='Stop';
     document.getElementById('mainBtn').className='btn btn-stop';
     ['minVal','avgVal','maxVal'].forEach(id=>document.getElementById(id).textContent='—');
     detectRPM();
-  } catch(e) {
-    document.getElementById('errMsg').textContent='Microphone access denied. Please allow and retry.';
-  }
+  } catch(e) { document.getElementById('errMsg').textContent='Microphone access denied. Please allow and retry.'; }
 }
 
 function stopMeasuring() {
@@ -314,40 +277,37 @@ function stopMeasuring() {
 document.getElementById('mainBtn').onclick=()=>running?stopMeasuring():startMeasuring();
 document.getElementById('sens').oninput=e=>{sensitivity=+e.target.value;document.getElementById('sensVal').textContent=sensitivity;};
 
-// ---- MODAL ----
+// Modal
 function openModal() {
   pendingSession={start:sessionStart,end:new Date(),log:sessionLog.slice(),min:minRPM===Infinity?0:minRPM,max:maxRPM,avg:sampleCount?Math.round(sumRPM/sampleCount):0};
   document.getElementById('modalNote').value='';
   document.getElementById('modal').classList.add('open');
 }
 function saveSession() {
-  const note=document.getElementById('modalNote').value.trim();
-  pendingSession.note=note;
-  sessions.unshift(pendingSession);
-  save('rpm_sessions',sessions);
+  pendingSession.note=document.getElementById('modalNote').value.trim();
+  sessions.unshift(pendingSession); store('rpm_sessions',sessions);
   document.getElementById('modal').classList.remove('open');
   renderHistory();
 }
-function discardSession() {
-  document.getElementById('modal').classList.remove('open');
-}
+function discardSession() { document.getElementById('modal').classList.remove('open'); }
 
-// ---- HISTORY ----
-function showPage(p) {
+// Pages
+function showPage(p, btn) {
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
   if(p==='history') renderHistory();
   if(p==='notes') renderNotes();
 }
 
+// History
 function renderHistory() {
   const el=document.getElementById('historyList');
   if(!sessions.length){el.innerHTML='<p class="history-empty">No sessions yet.<br>Start measuring to record data.</p>';return;}
   el.innerHTML=sessions.map((s,i)=>{
     const d=new Date(s.start), dur=Math.round((new Date(s.end)-new Date(s.start))/1000);
-    return `<div class="session-card" id="sc${i}">
+    return `<div class="session-card">
       <div class="session-header">
         <div class="session-date">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</div>
         <div class="session-date">${dur}s</div>
@@ -365,36 +325,29 @@ function renderHistory() {
       </div>
     </div>`;
   }).join('');
-  sessions.forEach((_,i)=>{
-    const c=document.getElementById('sg'+i);
-    if(c) setTimeout(()=>drawSessionGraph(c,sessions[i].log),50);
-  });
+  sessions.forEach((_,i)=>{ const c=document.getElementById('sg'+i); if(c) setTimeout(()=>drawSessionGraph(c,sessions[i].log),50); });
 }
 
-function deleteSession(i) {
-  sessions.splice(i,1); save('rpm_sessions',sessions); renderHistory();
-}
+function deleteSession(i) { sessions.splice(i,1); store('rpm_sessions',sessions); renderHistory(); }
 
 function exportCSV(i) {
-  const s=sessions[i];
-  let csv='Time,RPM\n';
-  const start=new Date(s.start).getTime();
+  const s=sessions[i], start=new Date(s.start).getTime();
+  let csv='Time(s),RPM\n';
   (s.log||[]).forEach(p=>{ csv+=`${((p.t-start)/1000).toFixed(1)},${p.rpm}\n`; });
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download=`rpm-session-${i+1}.csv`; a.click();
 }
 
-// ---- NOTES ----
+// Notes
 function saveNote() {
   const txt=document.getElementById('noteInput').value.trim();
   if(!txt) return;
   notes.unshift({text:txt,ts:new Date().toLocaleString()});
-  save('rpm_notes',notes);
+  store('rpm_notes',notes);
   document.getElementById('noteInput').value='';
   renderNotes();
 }
-function deleteNote(i) { notes.splice(i,1); save('rpm_notes',notes); renderNotes(); }
+function deleteNote(i) { notes.splice(i,1); store('rpm_notes',notes); renderNotes(); }
 function renderNotes() {
   const el=document.getElementById('notesList');
   if(!notes.length){el.innerHTML='<p class="history-empty">No notes yet.</p>';return;}
@@ -406,8 +359,12 @@ function renderNotes() {
     </div>`).join('');
 }
 
-// ---- SERVICE WORKER ----
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+// Cache self for offline using Cache API directly (no SW needed)
+if('caches' in window) {
+  caches.open('rpm-meter-v6').then(cache => {
+    cache.add(window.location.href).catch(()=>{});
+  });
+}
 
 renderNotes();
 </script>
