@@ -1,9 +1,22 @@
-const CACHE = 'rpm-meter-v5';
-const ASSETS = ['./', './index.html', './manifest.json'];
+const CACHE = 'rpm-meter-v6';
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.json'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE).then(cache => {
+      return Promise.all(
+        ASSETS.map(url =>
+          fetch(url).then(res => {
+            if (!res.ok) throw new Error('Failed to fetch ' + url);
+            return cache.put(url, res);
+          })
+        )
+      );
+    })
   );
   self.skipWaiting();
 });
@@ -23,9 +36,9 @@ self.addEventListener('fetch', e => {
       if (cached) return cached;
       return fetch(e.request).then(res => {
         const clone = res.clone();
-        caches.open(CACHE).then(cache => cache.put(e.request, clone));
+        caches.open(CACHE).then(c => c.put(e.request, clone));
         return res;
-      }).catch(() => cached);
+      }).catch(() => caches.match('./index.html'));
     })
   );
 });
