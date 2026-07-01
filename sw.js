@@ -1,4 +1,4 @@
-const CACHE = 'rpm-meter-v6';
+const CACHE = 'rpm-v7';
 const ASSETS = [
   './',
   './index.html',
