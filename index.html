@@ -359,11 +359,36 @@ function renderNotes() {
     </div>`).join('');
 }
 
-// Cache self for offline using Cache API directly (no SW needed)
-if('caches' in window) {
-  caches.open('rpm-meter-v6').then(cache => {
-    cache.add(window.location.href).catch(()=>{});
-  });
+// Register inline service worker for persistent offline
+if('serviceWorker' in navigator) {
+  const sw = `
+const CACHE='rpm-v7';
+self.addEventListener('install',e=>{
+  e.waitUntil(
+    fetch(self.location.origin+self.location.pathname.replace('sw-inline.js','')).then(r=>
+      caches.open(CACHE).then(c=>c.put('/',r))
+    ).catch(()=>{})
+  );
+  self.skipWaiting();
+});
+self.addEventListener('activate',e=>{
+  e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch',e=>{
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
+    caches.open(CACHE).then(c=>c.put(e.request,res.clone()));
+    return res;
+  }).catch(()=>caches.match('/'))));
+});`;
+  const blob = new Blob([sw],{type:'application/javascript'});
+  const url = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url,{scope:'/'})
+    .then(()=>console.log('SW registered'))
+    .catch(e=>{
+      // Fallback: try registering sw.js if blob fails
+      navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    });
 }
 
 renderNotes();
